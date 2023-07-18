@@ -79,6 +79,7 @@ const CounterPage = ({ initialValue }) => {
 
   return (
     <Panel className="m-3">
+      {/*// use value only in Count is if built with useState*/}
       <h1 className="text-lg">Count is {state.count}</h1>
       <div className="flex flex-row">
         <Button primary onClick={increment}>
@@ -93,6 +94,7 @@ const CounterPage = ({ initialValue }) => {
         <label htmlFor="">Input</label>
         <input
           type="number"
+          // use input only in value prop if built with useState
           value={state.input || ""}
           className="p-1 m-3 bg-gray-50 border border-gray-300"
           onChange={handleonChange}
