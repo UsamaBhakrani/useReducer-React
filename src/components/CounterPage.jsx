@@ -2,38 +2,75 @@ import { useState, useReducer } from "react";
 import Button from "./Button";
 import Panel from "./Panel";
 
+const INCREMENT = "increment";
+const DECREMENT = "decrement";
+const ADD_INPUT = "add-input";
+const ADD_TO_INITIALSTATE = "add-to-initialstate";
+
 const CounterPage = ({ initialValue }) => {
   // const [count, setCount] = useState(intialValue);
   // const [input, setInput] = useState(0);
 
+  // Reducer with Switch/Case
+
   const reducer = (state, action) => {
-    if (action.type === "increment") {
-      return {
-        ...state,
-        count: state.count + 1,
-      };
+    switch (action.type) {
+      case INCREMENT:
+        return {
+          ...state,
+          count: state.count + 1,
+        };
+      case ADD_INPUT:
+        return {
+          ...state,
+          input: action.payload,
+        };
+      case DECREMENT:
+        return {
+          ...state,
+          count: state.count - 1,
+        };
+      case ADD_TO_INITIALSTATE:
+        return {
+          ...state,
+          count: state.count + state.input,
+          input: 0,
+        };
+      default:
+        return state;
     }
-    if (action.type === "add-input") {
-      return {
-        ...state,
-        input: action.payload,
-      };
-    }
-    if (action.type === "decrement") {
-      return {
-        ...state,
-        count: state.count - 1,
-      };
-    }
-    if (action.type === "add-to-initialstate") {
-      return {
-        ...state,
-        count: state.count + state.input,
-        input: 0,
-      };
-    }
-    return state;
   };
+
+  // Reducer with IfElse
+
+  // const reducer = (state, action) => {
+  //   if (action.type === INCREMENT) {
+  //     return {
+  //       ...state,
+  //       count: state.count + 1,
+  //     };
+  //   }
+  //   if (action.type === ADD_INPUT) {
+  //     return {
+  //       ...state,
+  //       input: action.payload,
+  //     };
+  //   }
+  //   if (action.type === DECREMENT) {
+  //     return {
+  //       ...state,
+  //       count: state.count - 1,
+  //     };
+  //   }
+  //   if (action.type === ADD_TO_INITIALSTATE) {
+  //     return {
+  //       ...state,
+  //       count: state.count + state.input,
+  //       input: 0,
+  //     };
+  //   }
+  //   return state;
+  // };
 
   const [state, dispatch] = useReducer(reducer, {
     count: initialValue,
@@ -43,15 +80,16 @@ const CounterPage = ({ initialValue }) => {
 
   const increment = () => {
     // setCount(count + 1);
+
     dispatch({
-      type: "increment",
+      type: INCREMENT,
     });
   };
   const decrement = () => {
     // setCount(count - 1);
 
     dispatch({
-      type: "decrement",
+      type: DECREMENT,
     });
   };
 
@@ -61,7 +99,7 @@ const CounterPage = ({ initialValue }) => {
     // setInput(value);
 
     dispatch({
-      type: "add-input",
+      type: ADD_INPUT,
       payload: value,
     });
   };
@@ -73,13 +111,14 @@ const CounterPage = ({ initialValue }) => {
     // setInput(0);
 
     dispatch({
-      type: "add-to-initialstate",
+      type: ADD_TO_INITIALSTATE,
     });
   };
 
   return (
     <Panel className="m-3">
       {/*// use value only in Count is if built with useState*/}
+
       <h1 className="text-lg">Count is {state.count}</h1>
       <div className="flex flex-row">
         <Button primary onClick={increment}>
@@ -95,6 +134,7 @@ const CounterPage = ({ initialValue }) => {
         <input
           type="number"
           // use input only in value prop if built with useState
+
           value={state.input || ""}
           className="p-1 m-3 bg-gray-50 border border-gray-300"
           onChange={handleonChange}
