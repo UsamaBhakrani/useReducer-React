@@ -1,11 +1,12 @@
 import { useState, useReducer } from "react";
 import Button from "./Button";
 import Panel from "./Panel";
-
-const INCREMENT = "increment";
-const DECREMENT = "decrement";
-const ADD_INPUT = "add-input";
-const ADD_TO_INITIALSTATE = "add-to-initialstate";
+import {
+  INCREMENT,
+  DECREMENT,
+  ADD_INPUT,
+  ADD_TO_INITIALSTATE,
+} from "../actions";
 
 const CounterPage = ({ initialValue }) => {
   // const [count, setCount] = useState(intialValue);
@@ -72,10 +73,12 @@ const CounterPage = ({ initialValue }) => {
   //   return state;
   // };
 
-  const [state, dispatch] = useReducer(reducer, {
+  const initial = {
     count: initialValue,
     input: 0,
-  });
+  };
+
+  const [state, dispatch] = useReducer(reducer, initial);
   console.log(state);
 
   const increment = () => {
